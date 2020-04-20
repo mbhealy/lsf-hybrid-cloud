@@ -11,7 +11,7 @@
   gather_facts: false
   tasks:
 
-    - include_vars: "AWS/AWS-config.yml"
+    - include_vars: "ibm/ibm-config.yml"
 
     - name: Check AWS keys
       fail:

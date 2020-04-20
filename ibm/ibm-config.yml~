@@ -1,0 +1,93 @@
+---
+
+# What type of cluster to deploy.  Uncomment one of these
+# multi_cluster  - Deploys a LSF master on the cloud and 
+#                  configures the resource connector to
+#                  dynamically size cluster.
+# hybrid_cluster - Deploys additional machines in te cloud 
+#                  that will join your on premises LSF cluster.
+#multi_cluster: true
+hybrid_cluster: true
+
+# Set IBM Cloud zone to deploy on
+ibm_Zone: us-south-2
+
+# Set the API key and user for your IBM Cloud account
+ibm_Cloud_User: {put your user name here}
+ibm_Api_Key: {put your api key here}
+
+# The size of the instance to make
+ibm_Instance_Profile: bx2-2x8
+
+# Set image to the OS image you want to build from.  The default
+# provided is CentOS 7.
+ibm_Image: ibm-centos-7-6-minimal-amd64-2
+
+# Set the CIDR block for the VPC.  Note this block must not overlap with
+# any on premises networks, and the VPN network.
+ibm_VPC_CIDR: 10.1.0.0/16
+
+# Set the CIDR block for the Private subnet in the VPC.  Note this block 
+# must not overlap with VPC private subnet
+ibm_VPC_PRV_CIDR: 10.1.1.0/24
+
+# The URL of the IBM API endpoint
+ibm_API_URL: https://cloud.ibm.com
+
+# The on premises subnet that will be given access to the
+# cloud subnet.
+CLIENT_NET: 10.10.10.0
+CLIENT_MASK: 255.255.255.0
+
+# The VPN server private IP on the tun0 interface
+# This is not the cloud subnet, this is only for the VPN
+SERVER_IP: 10.0.11.1
+SERVER_NET: 10.0.11.0
+SERVER_MASK: 255.255.255.0
+
+
+# ---------------------------------------------------------------------
+# -----                   WARNING                                 -----
+# ---------------------------------------------------------------------
+# The values below are set automatically by the "Step1-make-vpc.yml" 
+# playbook as it runs the various tasks.  If you are using an existing
+# VPC then override the values below.
+# If you are providing your own VPN set the ibm_VPN_PRV_IP below
+
+# This is the IP private subnet address of the VPN on the cloud.  The
+# machines on the cloud will have this as a route to the on premises
+# subnet
+ibm_VPN_PRV_IP: none
+
+# This is the ID of the VPC to use for the LSF instances.  
+# Initial value is "none"
+ibm_VPC: none
+
+# Set the VPC subnet id to the private subnet of the VPC
+# Initial value is "none"
+ibm_VPC_PRV_Subnet: none
+
+# Set to the VPC Public Gateway ID value.
+# Initial value is "none"
+ibm_VPC_PGW: none
+
+# Set to the Network ACLs ID to use.
+# Initial value is "none"
+ibm_VPC_NACLs: none
+
+# The group ID of the Security group that allows SSH in
+# As part of the VPC setup create a security group that allows
+# ssh in. Initially set to:  none
+ibm_VPC_Security_Group: none
+
+# When using the multi_cluster deployment this is the
+# name of the IAM Role that will be assigned to the LSF
+# master on the cloud.  If "none" one will be generated
+# called "LSFRCRole"
+ibm_IAM_Role_Name: none
+
+# Set to the name of the SSH public key you generated for your user
+ibm_Key_Name: MyIBMPublicKey
+
+# The location of the private key file associated with above. 
+ibm_Private_Key_File: "./ibm/id_rsa"
